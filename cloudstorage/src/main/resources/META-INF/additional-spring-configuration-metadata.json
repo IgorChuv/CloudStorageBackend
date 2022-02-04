@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "management.security.enabled",
+      "type": "java.lang.String",
+      "description": "Description for management.security.enabled."
+  }
+] }
