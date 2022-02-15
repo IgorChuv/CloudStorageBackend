@@ -1,0 +1,25 @@
+version: "3.7"
+services:
+  cloudstorage:
+    build: .
+    restart: always
+    ports:
+      - 8080:8080
+    working_dir: /cloudstorage
+    volumes:
+    - ./:/cloudstorage
+    depends_on:
+      - mysql_db
+    command: sh -c './wait-for mysql_db:3306 -- npm start'
+  mysql_db:
+    image: "mysql:latest"
+    volumes:
+    - mysql_data:/var/lib/mysql
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: database
+      MYSQL_ROOT_PASSWORD: mysql
+volumes:
+  mysql_data:
