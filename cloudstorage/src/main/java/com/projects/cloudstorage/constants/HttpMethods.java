@@ -1,4 +1,4 @@
-package com.projects.cloudstorage.ConfigConstants;
+package com.projects.cloudstorage.constants;
 
 import java.util.Arrays;
 import java.util.List;

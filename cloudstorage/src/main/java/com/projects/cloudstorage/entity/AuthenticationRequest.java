@@ -1,4 +1,4 @@
-package com.projects.cloudstorage.JsonEntity;
+package com.projects.cloudstorage.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

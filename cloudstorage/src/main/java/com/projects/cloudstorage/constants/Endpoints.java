@@ -1,4 +1,4 @@
-package com.projects.cloudstorage.ConfigConstants;
+package com.projects.cloudstorage.constants;
 
 public final class Endpoints {
     public static final String MAIN_ENDPOINT = "/**";

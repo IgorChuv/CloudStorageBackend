@@ -7,16 +7,11 @@ import com.projects.cloudstorage.service.FileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.File;
-import java.io.FileInputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -57,7 +52,7 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public ResponseEntity<HttpStatus> deleteFile(FileData fileData) throws Exception {
+    public void deleteFile(FileData fileData) throws Exception {
         if (new File(uploadPath, fileData.getFilename()).delete()) {
             fileRepository.delete(fileData);
             log.info("METHOD: deleteFile - file successfully deleted");
@@ -65,12 +60,11 @@ public class FileServiceImpl implements FileService {
             log.error("IN deleteFile - file deleteFile error");
             throw new Exception("file deleteFile error");
         }
-        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @Override
     @Modifying
-    public ResponseEntity<HttpStatus> renameFile(String newFilename, String filename) throws Exception {
+    public void renameFile(String newFilename, String filename) throws Exception {
         if (filename.isEmpty()) {
             log.error("METHOD: renameFile - new filename is empty");
             throw new BadCredentialsException("new filename is empty");
@@ -91,37 +85,28 @@ public class FileServiceImpl implements FileService {
             log.error("METHOD: renameFile - file rename error");
             throw new Exception("Failed to rename file");
         }
-        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @Override
-    public ResponseEntity<HttpStatus> saveFile(String filename, MultipartFile file) throws Exception {
-        if (filename.isEmpty() || file.isEmpty()) {
+    public void saveFile(String filename, File file) {
+        if (filename.isEmpty()) {
             log.error("METHOD: saveFile - error input data");
             throw new BadCredentialsException("error input data");
         }
-        File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) {
-            uploadDir.mkdir();
-            log.info("METHOD: saveFile - directory created: " + uploadPath);
-        }
         FileData fileData = new FileData();
         fileData.setFilename(filename);
-        fileData.setSize((int) file.getSize());
+        fileData.setSize((int) file.length());
         fileData.setUpdated(new Date());
         fileData.setCreated(new Date());
         fileData.setStatus(Status.ACTIVE);
-        file.transferTo(new File(uploadPath + "/" + filename));
         fileRepository.save(fileData);
         log.info("METHOD: saveFile - file successfully saved");
-        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @Override
-    public ResponseEntity<byte[]> getFile(String filename) throws Exception {
-        FileInputStream fin = new FileInputStream(new File(uploadPath, filename));
-        MultipartFile multipartFile = new MockMultipartFile(filename, fin);
+    public File getFile(String filename) {
+        File file = new File(uploadPath, filename);
         log.info("METHOD: getFile - file {} download", filename);
-        return ResponseEntity.ok().contentLength(multipartFile.getSize()).body(multipartFile.getBytes());
+        return file;
     }
 }

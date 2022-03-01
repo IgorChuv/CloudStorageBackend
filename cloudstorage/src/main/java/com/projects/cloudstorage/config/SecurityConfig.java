@@ -1,8 +1,8 @@
 package com.projects.cloudstorage.config;
 
-import com.projects.cloudstorage.ConfigConstants.AllowedUserRoles;
-import com.projects.cloudstorage.ConfigConstants.Endpoints;
-import com.projects.cloudstorage.ConfigConstants.HttpMethods;
+import com.projects.cloudstorage.constants.AllowedUserRoles;
+import com.projects.cloudstorage.constants.Endpoints;
+import com.projects.cloudstorage.constants.HttpMethods;
 import com.projects.cloudstorage.security.jwt.JwtTokenFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 
 import java.util.Collections;
 

@@ -1,6 +1,6 @@
 package com.projects.cloudstorage.config;
 
-import com.projects.cloudstorage.JsonEntity.ErrorResponse;
+import com.projects.cloudstorage.entity.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

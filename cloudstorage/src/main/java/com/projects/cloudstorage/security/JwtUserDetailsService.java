@@ -5,7 +5,6 @@ import com.projects.cloudstorage.security.jwt.JwtUser;
 import com.projects.cloudstorage.security.jwt.JwtUserFactory;
 import com.projects.cloudstorage.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,7 +18,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     private final UserService userService;
 
-    @Autowired
+
     public JwtUserDetailsService(UserService userService) {
         this.userService = userService;
     }
